@@ -16,11 +16,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419163602645.png">
 <meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419205927469.png">
-<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419215916393.png">
-<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419220041948.png">
-<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419220415579.png">
+<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419215916393.png">
+<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220041948.png">
+<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220415579.png">
+<meta property="og:image" content="http://www.robotqi.cn/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220735224.png">
 <meta property="article:published_time" content="2020-05-04T14:56:19.932Z">
-<meta property="article:modified_time" content="2020-05-04T15:08:56.580Z">
+<meta property="article:modified_time" content="2020-05-04T15:16:17.169Z">
 <meta property="article:author" content="Robot Qi">
 <meta property="article:tag" content="java&#x2F;go&#x2F;python">
 <meta name="twitter:card" content="summary">
@@ -176,31 +177,42 @@
 </li>
 <li><h3 id="jvm内存OOM"><a href="#jvm内存OOM" class="headerlink" title="jvm内存OOM"></a>jvm内存OOM</h3><ol>
 <li><h6 id="堆OOM"><a href="#堆OOM" class="headerlink" title="堆OOM"></a>堆OOM</h6><ol>
-<li>如上分析，java内存模型中除了程序计数器不会发生OOM外，其他均有可能发生OOM。</li>
-<li>堆发生OOM是最常见的，对于堆的OOM，是有分析套路的<ul>
+<li><p>如上分析，java内存模型中除了程序计数器不会发生OOM外，其他均有可能发生OOM。</p>
+</li>
+<li><p>堆发生OOM是最常见的，对于堆的OOM，是有分析套路的</p>
+<ul>
 <li>首先dump出堆快照，分析导致OOM的对象是否是必要的，确定是内存泄漏还是内存溢出，它们俩的区别在于内存泄漏是由于某种问题导致GC无法回收对象，其是不必要的，对于内存溢出，其是必要的</li>
 <li>对于内存泄漏，需要通过工具分析出该对象与GCROOTS的引用链，发现存在哪些路径导致无法回收</li>
 <li>对于内存溢出，需要分析jvm的参数(-Xms和-Xmx)是否有增加空间，并且还要分析代码设计是否合理，是否存在生命周期过长，内存占用过大的对象           </li>
 </ul>
 </li>
-<li>堆OOM的场景里，异常栈会有heap space字眼<br>  <img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419215916393.png" alt="image-20200419215916393"></li>
+<li><p>堆OOM的场景里，异常栈会有heap space字眼</p>
+</li>
 </ol>
+<img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419215916393.png" alt="image-20200419205927469" style="zoom:100%;">    
 </li>
 <li><h6 id="栈发生OOM"><a href="#栈发生OOM" class="headerlink" title="栈发生OOM"></a>栈发生OOM</h6><ol>
-<li>栈容量是通过-Xss参数设置，如果栈深超过最大深度，抛出栈溢出异常，如果创建线程时无法分配到内存空间抛出OOM</li>
-<li>这里注意栈容量是指内存大小，而不是指栈帧的个数，每个方法的栈帧大小都是不等的，所以当一个栈帧中的局部变量表占用空间较大时，此时栈帧较大，较为占用栈深，此时当栈帧无法分配时就会抛出栈溢出，此时可以通过调整-Xss来解决。栈溢出的字眼很明显，根据异常名称就可知<br><img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419220041948.png" alt="image-20200419220041948"></li>
-<li>当内存空间不够用于分配新线程时，此时就会OOM，此时的做法一般是降低栈容量和堆最大容量，所以说栈容量如果设置过大是可能引起OOM的，它俩会相互影响。栈OOM的字眼会告诉无法创建native线程(本地线程的映射)，甚至是”possibly outof memory or process/resource limits reached”<br> <img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/jvm%E5%86%85%E5%AD%98%5Cimage-20200419220415579.png" alt="image-20200419220415579"></li>
+<li><p>栈容量是通过-Xss参数设置，如果栈深超过最大深度，抛出栈溢出异常，如果创建线程时无法分配到内存空间抛出OOM</p>
+</li>
+<li><p>这里注意栈容量是指内存大小，而不是指栈帧的个数，每个方法的栈帧大小都是不等的，所以当一个栈帧中的局部变量表占用空间较大时，此时栈帧较大，较为占用栈深，此时当栈帧无法分配时就会抛出栈溢出，此时可以通过调整-Xss来解决。栈溢出的字眼很明显，根据异常名称就可知</p>
+</li>
 </ol>
+<img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220041948.png" alt="image-20200419205927469" style="zoom:100%;">
+
+<ol start="3">
+<li>当内存空间不够用于分配新线程时，此时就会OOM，此时的做法一般是降低栈容量和堆最大容量，所以说栈容量如果设置过大是可能引起OOM的，它俩会相互影响。栈OOM的字眼会告诉无法创建native线程(本地线程的映射)，甚至是”possibly outof memory or process/resource limits reached”</li>
+</ol>
+<img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220415579.png" alt="image-20200419205927469" style="zoom:100%;">
 </li>
 <li><h6 id="方法区发生OOM"><a href="#方法区发生OOM" class="headerlink" title="方法区发生OOM"></a>方法区发生OOM</h6><ol>
 <li>在jdk7中由于字符串常量池和静态常量已经移到了堆中(无法通过字符串常量池过大来引起方法区OOM)，所以对于<code>intern()</code>方法，其不会再将堆中的字符串copy到字符串常量池中，然后返回常量池中的字符串，而是让常量池中直接引用堆中的字符串，不再copy了，这是一个重要变化，其表现就是地址相同</li>
 <li>方法区(metaspace)的溢出原因一般是类型信息过多(比如使用CGLIB较多的框架中)，在jdk8之后的元空间提供了几个参数用于设置，-XX：MaxMetaspaceSize用于设置元空间的最大值，默认是-1即不限制，所以此时只受本地内存影响；-XX：MetaspaceSize用于设置元空间的回收阀值，当元空间大小超过该值会触发垃圾回收，另外还有一些其他参数</li>
-<li>方法区的OOM字眼现在是通过元空间来展现<pre><code>&lt;img src=&quot;jvm内存\image-20200419220735224.png&quot; alt=&quot;image-20200419220735224&quot; style=&quot;zoom:50%;&quot; /&gt;</code></pre></li>
+<li>方法区的OOM字眼现在是通过元空间来展现<img src="/2020/05/04/jvm%E5%86%85%E5%AD%98/image-20200419220735224.png" alt="image-20200419205927469" style="zoom:100%;"></li>
 </ol>
 </li>
 <li><h6 id="直接内存发生OOM"><a href="#直接内存发生OOM" class="headerlink" title="直接内存发生OOM"></a>直接内存发生OOM</h6><ol>
 <li>直接内存的大小默认是与-Xmx指定，与java堆最大值一致，可以通过-XX：MaxDirectMemorySize来进行指定</li>
-<li>本地OOM的字眼比较少，主要是观察heap dump有无异常，如果dump很小，那么就可能就是直接内存OOM，或者是观察异常栈是否有直接内存方面的应用比如nio或者是操作方法<pre><code>![image-20200419220923968](jvm内存\image-20200419220923968.png)</code></pre></li>
+<li>本地OOM的字眼比较少，主要是观察heap dump有无异常，如果dump很小，那么就可能就是直接内存OOM，或者是观察异常栈是否有直接内存方面的应用比如nio或者是操作方法<pre><code>&lt;img src=&quot;jvm内存\image-20200419220923968.png&quot; alt=&quot;image-20200419205927469&quot; style=&quot;zoom:100%;&quot; /&gt;</code></pre></li>
 </ol>
 </li>
 </ol>
