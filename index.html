@@ -148,34 +148,35 @@
 </li>
 </ol>
 <h3 id="react概念"><a href="#react概念" class="headerlink" title="react概念"></a>react概念</h3><ol>
-<li><h6 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h6></li>
+<li><h6 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h6><ol>
 <li><p>首先导入两个依赖包，<code>npm install react react-dom</code>，react用于操作虚拟dom节点等操作，react-dom用于渲染操作，然后在js文件中导入，<code>import React from &#39;react&#39;
- import ReactDOM from &#39;react-dom&#39;</code></p>
-<ol start="2">
-<li>虚拟dom就是react用js对象表示的dom节点，这里可以使用<code>React.createElement()</code>普通的js语法创建虚拟dom节点，其中第一个参数是标签名称，第二个是标签属性，第三个与之后的是子节点，可以是文本内容，也可以是子节点对象，比如<code>const v1=React.createElement(&quot;h1&quot;,{name:&quot;zhangsan&quot;},&quot;hello react&quot;);</code></li>
-<li>然后使用react-dom将虚拟dom节点进行渲染，比如<code>ReactDom.render(v1,document.getElementById(&quot;div1&quot;));</code>，此时就将v1虚拟dom节点渲染到div1节点上</li>
-<li>总结来说，react的基本思想很简单，就是创建虚拟dom节点与渲染虚拟dom节点。</li>
-<li>由上可知，使用js方法创建虚拟dom节点，过于麻烦，所以可以使用jsx的语法糖，在js文件中直接写html代码。这里需要注意的是这里并不是把嵌入的html代码直接渲染到页面中，它还是使用虚拟dom节点的，这里是通过babel工具转成原来的创建方法而已，本质是一致的。</li>
-<li>可以不通过打包工具，直接在html网页中引入相关react/react-dom包来使用react，请见<a href="https://react.docschina.org/docs/add-react-to-a-website.html" target="_blank" rel="noopener">在网站中添加 React</a></li>
+import ReactDOM from &#39;react-dom&#39;</code></p>
+</li>
+<li><p>虚拟dom就是react用js对象表示的dom节点，这里可以使用<code>React.createElement()</code>普通的js语法创建虚拟dom节点，其中第一个参数是标签名称，第二个是标签属性，第三个与之后的是子节点，可以是文本内容，也可以是子节点对象，比如<code>const v1=React.createElement(&quot;h1&quot;,{name:&quot;zhangsan&quot;},&quot;hello react&quot;);</code></p>
+</li>
+<li><p>然后使用react-dom将虚拟dom节点进行渲染，比如<code>ReactDom.render(v1,document.getElementById(&quot;div1&quot;));</code>，此时就将v1虚拟dom节点渲染到div1节点上</p>
+</li>
+<li><p>总结来说，react的基本思想很简单，就是创建虚拟dom节点与渲染虚拟dom节点。</p>
+</li>
+<li><p>由上可知，使用js方法创建虚拟dom节点，过于麻烦，所以可以使用jsx的语法糖，在js文件中直接写html代码。这里需要注意的是这里并不是把嵌入的html代码直接渲染到页面中，它还是使用虚拟dom节点的，这里是通过babel工具转成原来的创建方法而已，本质是一致的。</p>
+</li>
+<li><p>可以不通过打包工具，直接在html网页中引入相关react/react-dom包来使用react，请见<a href="https://react.docschina.org/docs/add-react-to-a-website.html" target="_blank" rel="noopener">在网站中添加 React</a></p>
+</li>
 </ol>
 </li>
 <li><h6 id="jsx概念"><a href="#jsx概念" class="headerlink" title="jsx概念"></a>jsx概念</h6><ol>
 <li>jsx是react提供的一种语法糖，其可以允许在js代码中写html，也可以将css代码写在其中，文件后缀为<code>.jsx</code>，在jsx的代码区域中如果要使用js代码，需要使用花括号<code>{}</code>引入<ul>
-<li>传统写法，<code>React.createElement(&quot;h1&quot;,{name:&quot;zhangsan&quot;},&quot;hello react&quot;)</code><ul>
+<li>传统写法，<code>React.createElement(&quot;h1&quot;,{name:&quot;zhangsan&quot;},&quot;hello react&quot;)</code></li>
 <li>jsx写法，<code>&lt;h1 name=&quot;zhangsan&quot;&gt;hello react&lt;/h1&gt;</code></li>
 </ul>
-<ol start="2">
-<li>分析其本质，就是React.createElement()函数的调用，所以以下几个概念是一致的</li>
-</ol>
 </li>
+<li>分析其本质，就是React.createElement()函数的调用，所以以下几个概念是一致的<ul>
 <li>react元素</li>
-<li>虚拟dom节点对象<ul>
+<li>虚拟dom节点对象</li>
 <li>jsx对象</li>
 </ul>
-<ol start="3">
-<li>jsx有若干注意事项</li>
-</ol>
 </li>
+<li>jsx有若干注意事项<ul>
 <li>react是面向组件开发，所以jsx不仅支持原生的html标签，也可以是通过组件定义的标签，其中原生的html标签是小写开头，而组件标签必须是大写开头</li>
 <li>对于标签的属性统一使用小驼峰命名，比如原生标签中的<code>onclick</code>事件，jsx中改为<code>onClick</code></li>
 <li>jsx中标签的属性还需要防止与js关键字冲突，所以部分属性名称发生变化，比如常用<code>class</code>属性名称就变成了<code>className</code>属性</li>
