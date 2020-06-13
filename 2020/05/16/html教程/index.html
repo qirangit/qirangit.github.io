@@ -15,7 +15,7 @@
 <meta property="og:description" content="web发展历史 web前端的技术发展经历过很多时期，注意以下时期并不是泾渭分明，其实是相互交错，并且技术也是继承与发展，而不是简单的更新换代 静态时期，静态是指html页面已经提前创建生成，此时通常通过nginx或apache等http服务器绑定80端口来管理这些静态页面，供前端请求。静态页面由于部署简单方便，现在还比较常见 动态时期，此时前端请求到后端时，服务端会根据http的请求内容，动态地生">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-16T02:55:11.000Z">
-<meta property="article:modified_time" content="2020-06-13T12:16:45.730Z">
+<meta property="article:modified_time" content="2020-06-13T14:32:20.648Z">
 <meta property="article:author" content="Robot Qi">
 <meta property="article:tag" content="html&#x2F;xhtml&#x2F;html5">
 <meta name="twitter:card" content="summary">
@@ -118,10 +118,12 @@
 </li>
 </ul>
 </li>
-<li><p>html标签通过属性来提供更多标签功能，属性是通过键值对形式出现，键直接用属性名表示，值必须是字符串，键与值之间用<code>=</code>分隔，键值对之间用空格分隔，属性分为特有属性和通用属性，</p>
+<li><p>html标签通过属性来提供更多标签功能，属性是通过键值对形式出现，键直接用属性名表示，值必须是字符串，键与值之间用<code>=</code>分隔，键值对之间用空格分隔，属性分为普通属性和事件属性，</p>
 <ol>
-<li>通用属性是每个标签都拥有的，比如类名class(用于分类)、id(用于标识)、样式style</li>
-<li>特有属性属于特定标签自身的，比如bgcolor属性，可用于设置背景色，align属性表示对齐方式(样式类的属性现在不建议标签内使用)，a标签的target表示超链接跳转的方式</li>
+<li><p>对于普通属性，比如比如所有标签都拥有的类名class(用于分类)、id(用于标识)、样式style等属性，以及标签特有的，比如a标签的target表示超链接跳转的方式</p>
+</li>
+<li><p>对于事件属性，可以设置事件响应代码，比如<code>&lt;body onclick=&quot;alert(&#39;hello html&#39;)&quot;&gt;hello world&lt;/body&gt;</code></p>
+</li>
 </ol>
 </li>
 <li><p>首先了解一个html文档的总体结构</p>
@@ -136,7 +138,7 @@
 <h3 id="html常见标签"><a href="#html常见标签" class="headerlink" title="html常见标签"></a>html常见标签</h3><ol>
 <li><p>h1~h6标签用于标题展示</p>
 </li>
-<li><p>p标签用于段落展示，段落和标题标签都是块级标签，不仅自身独占一行，前后还空一行</p>
+<li><p>p标签用于段落展示</p>
 </li>
 <li><p>br标签用于换行，hr标签用于水平线</p>
 </li>
@@ -156,12 +158,13 @@
 </li>
 <li><p>alt属性表示图片的描述文字，当图片无法显示时会显示</p>
 </li>
-<li><p>包括图片文件路径在内的路径分为两种，分别是绝对路径和相对路径</p>
+<li><p>包括图片文件路径在内的web路径分为两种，分别是绝对路径和相对路径</p>
 <ul>
-<li><p>相对路径，就是相对当前文件的路径，推荐使用</p>
+<li><p>相对路径，就是相对当前文件的路径</p>
+<p><code>.</code>表示当前文件所在目录，<code>..</code>表示当前文件所在的上一级目录，<code>文件名</code>表示当前文件所在目录的文件，等价于<code>./文件名</code>，普通java项目的相对路径是从工程名开始计算，一般是classpath目录</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"w3c.jpg"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./w3c.jpg"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./images/w3c.jpg"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>绝对路径，根据网站根目录而来，根目录首先得确定出来才行，比如</p>
+<li><p>绝对路径，根据url地址而来，完整格式是<code>http://ip:port/工程名/path</code>，普通java项目中的绝对路径是<code>盘符:/目录/文件名</code></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">​```html</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/htmlstudy/images/w3c.jpg"</span>&gt;</span></span><br><span class="line">​</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. html的样式有三种设置方式，</span><br><span class="line">    1. 外部样式表，也就是css文件单独抽取出来，这里需要使用link标签，比如&#96;&lt;link rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; href&#x3D;&quot;css&#x2F;outer.css&quot;&gt;&#96;</span><br><span class="line"></span><br><span class="line">    2. 内部样式表，这里使用style标签，其元素内容就是css样式代码，比如</span><br><span class="line"></span><br><span class="line">       &#96;&#96;&#96;html</span><br><span class="line">       &lt;style&gt;</span><br><span class="line">           p &#123;</span><br><span class="line">               color: orange;</span><br><span class="line">           &#125;</span><br><span class="line">       &lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
 </li>
@@ -175,7 +178,7 @@
 <ol>
 <li>其元素内容可以是文本，也可以是图片，或者其他html元素都可以，比如<code>&lt;a href=&quot;index.html&quot;&gt;&lt;img src=&quot;images/w3c.jpg&quot;&gt;&lt;/a&gt;</code></li>
 <li>href属性表示超链接的地址，可以指定一个网络上的url地址，也可以指定本地的网页，比如<code>&lt;a href=&quot;http://www.baidu.com&quot;&gt;百度网站&lt;/a&gt;</code>和<code>&lt;a href=&quot;jump.html&quot;&gt;jump页面验证&lt;/a&gt;</code></li>
-<li>target属性表示文档被打开在何处，常见的值有<code>_blank</code></li>
+<li>target属性表示文档被打开在何处，<code>_self</code>表示在当前tab中打开，默认值，<code>_blank</code>表示在新的tab打开</li>
 <li>name属性表示a标签的锚点值，其他的a标签通过href设置该锚点值就可以跳转到该锚点，比如有一个锚点<code>&lt;a name=&quot;hello&quot;&gt;z这是一个hello锚点&lt;/a&gt;</code>，跳转的链接<code>&lt;a href=&quot;#hello&quot;&gt;点击跳转到hello锚点&lt;/a&gt;</code></li>
 </ol>
 </li>
@@ -186,8 +189,16 @@
 <li><p>tr标签下有th标签和td标签，th标签表示列头单元格，td标签表示普通单元格</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span> <span class="attr">cellpadding</span>=<span class="string">"10"</span> <span class="attr">cellspacing</span>=<span class="string">"10"</span> <span class="attr">bgcolor</span>=<span class="string">"red"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">caption</span>&gt;</span>表格标题<span class="tag">&lt;/<span class="name">caption</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span>第一列<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span>第二列<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>内容1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>内容2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>内容3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>内容4<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
+<li><p>在th和td标签上通过设置rowspan和colspan可以跨行跨列，对于多出的单元格需要删除</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--这个表格对于第一行第一列的单元格跨两列展示，所以删除第一行多余的一个单元格</span></span><br><span class="line"><span class="comment">	对于第二行第一列的单元格跨两行展示，所以删除第三行多余的一个单元格</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">height</span>=<span class="string">"200px"</span> <span class="attr">border</span>=<span class="string">"1px"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">"2"</span>&gt;</span>1.1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">rowspan</span>=<span class="string">"2"</span>&gt;</span>2.1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>2.3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>3.1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>3.2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
 </ul>
 </li>
+</ol>
+<ol start="9">
 <li><p>列表标签，分为有序列表ol和无序列表ul</p>
 <ol>
 <li><p>有序列表ol，列表选项li，默认使用数字表示序号，也可以通过ol标签的type属性设置为希腊数字i或者英文字母a，另外可以设置start属性，表示开始的数字</p>
@@ -195,14 +206,14 @@
 <li><p>无序列ul表，列表选项也是li，默认形状是空心圆disc，可以通过type属性设置为circle实心圆或者square实方形</p>
 </li>
 <li><p>列表可以进行嵌套，从而实现多层级，这里嵌套的方式就是直接在需要展开的li标签后面写上新的ul或ol列表即可</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">type</span>=<span class="string">"square"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">start</span>=<span class="string">"10"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第一条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第二条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第三条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第四条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">type</span>=<span class="string">"square"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">start</span>=<span class="string">"10"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第一条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第二条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第三条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>第四条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>块元素</p>
 <ol>
-<li>html的标签中标题h1~h6、段落p、列表ul和div都是块级元素(block element)，块级元素的前后保证换行，其中div一般作为块级容器存在</li>
-<li>与块级元素相反的就是内联元素(inline element)，其并不会换行，比如a、b和span标签，其中span作为一种内联容器存在</li>
+<li>html的标签中标题h1~h6、段落p、列表ul和div都是块级元素(block element)，其均会保证独占一行，并且对于标题标签、段落标签和列表标签，其上方或下方各空出一行，但如果存在空行则不再空行，div一般作为块级容器存在</li>
+<li>与块级元素相反的就是内联元素(inline element)，其并不会独占一行，比如a、input和span标签，其中span作为一种内联容器存在</li>
 </ol>
 </li>
 </ol>
@@ -231,35 +242,41 @@
 <li>对于空格，使用<code>&amp;nbsp;</code>，注意如果是在html里面直接敲出多个空格，会被自动截短至一个空格</li>
 </ul>
 </li>
-<li><p>表单，以上的标签只能用于展示，而表单标签可以用于输入和提交数据，表单标签是form，</p>
+<li><p>表单，以上的标签只能用于展示，而表单标签可以用于输入和提交数据，表单标签是form，拥有多种类型的输入子标签</p>
 <ol>
-<li><p>form标签拥有多种类型的输入子标签，</p>
+<li><p>input标签，其用于常规输入，其为空元素标签，通过type可以指定输入类型，</p>
 <ul>
-<li>input标签，其用于常规输入，其为空元素标签，通过type可以指定输入类型，比如text文本、password密码、checkbox多选框、单选框radio、submit提交，reset重置和button普通按钮，这里按钮的名称通过value进行指定(按钮也可以通过单独的button标签来表示，其type是submit或reset，其按钮名称则是通过闭合的元素内容表示，不推荐使用)<ul>
-<li>select标签，表示下拉栏，下拉选项是option子标签</li>
-<li>textarea标签，表示文本区域，用于大面积的文字输入，可以使用rows和cols设置宽高，通过显式设置元素内容表示默认显示的内容</li>
+<li>text文本标签，通过value属性指定默认文本</li>
+<li>password密码，通过value属性指定默认密码，其为掩码不展示</li>
+<li>radio单选框，需要使用name属性表示同一组产生互斥，通过checked=”checked”表示默认选项</li>
+<li>checkbox多选框，通过checked=”checked”表示默认勾选选项</li>
+<li>submit提交按钮，通过value属性进行指定按钮名称</li>
+<li>reset重置按钮、通过value属性进行指定按钮名称</li>
+<li>button普通按钮，通过value属性进行指定按钮名称，按钮也可以通过单独的button标签来表示，其type是submit或reset，其按钮名称则是通过闭合的元素内容表示，不推荐使用</li>
+<li>hidden隐藏，通过value属性指定隐藏信息，其并不会展示仅用于发送信息</li>
+<li>file文件按钮，表示提交的文件</li>
 </ul>
 </li>
+<li><p>select标签，表示下拉栏，下拉选项是option子标签，使用selected=”selected”表示默认选择项</p>
+</li>
+<li><p>textarea标签，表示文本区域，用于多行输入，可以使用rows和cols设置宽高，通过显式设置标签内容表示默认显示的内容</p>
+</li>
+<li><p>form标签拥有若干个属性，</p>
+<ul>
+<li>action属性表示提交表单数据，发送http请求的url地址，默认是当前页面的url</li>
+<li>method属性表示提交数据发送的http方法，默认是get方法，使用get提交表单数据，其会将表单数据会通过url参数的形式提供，所以其不够安全而且受到长度限制，使用post提交，则通过请求体body来传递表单数据，更加安全并且长度也不受限制</li>
 </ul>
-<ol start="2">
-<li>form标签拥有若干个属性，<ul>
-<li>action属性表示提交表单数据发送http请求的url，表示发起http请求的默认是当前url的页面</li>
-<li>method属性表示提交数据发送的http方法，默认是get方法</li>
+</li>
+<li><p>表单提交时，需要将表单信息发送到服务器，所以对于每一项数据是需要以键值对形式传递</p>
+<ul>
+<li>使用name属性标识每个上传数据的名称，其中对于单选框、多选框和下拉栏仅需要一个name属性设置，</li>
+<li>使用value属性表示上传数据的值，其中对于单选框、多选框和下拉栏需要显式设置value属性，而其他输入框由于存在手动输入，会将其输入作为默认的value属性值上传而不需要设置</li>
 </ul>
 </li>
-</ol>
-</li>
-<li><p>下述demo会将表单通过参数形式提交到demo_form.asp页面中去</p>
+<li><p>下述demo会将表单通过参数形式提交到百度页面中去，参数在地址栏可见</p>
 </li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"https://www.w3school.com.cn/demo/demo_form.asp"</span>&gt;</span></span><br><span class="line">    First name:<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"firstname"</span> <span class="attr">value</span>=<span class="string">"Mickey"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Last name:<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"lastname"</span> <span class="attr">value</span>=<span class="string">"Mouse"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>提交表单时可以通过name属性进行标识，其中radio的type还需要通过name进行互斥，所以必须提供</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    密码:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    性别:<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"sex"</span>&gt;</span>男<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"sex"</span>&gt;</span>女<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    爱好:<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>篮球<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>足球<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span>垒球<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    位置:</span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"location"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span>&gt;</span>东南<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span>&gt;</span>西北<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span>&gt;</span>东北<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span>&gt;</span>华南<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span>&gt;</span>中部<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    特长:</span><br><span class="line">    <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">cols</span>=<span class="string">"20"</span> <span class="attr">rows</span>=<span class="string">"20"</span>&gt;</span>请输入个人的特长<span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"reset"</span>&gt;</span>重置<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://www.baidu.com"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></span><br><span class="line">    用户名称：<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">"zhangsan"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    用户密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"123"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    用户性别：</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"sex"</span> <span class="attr">checked</span>=<span class="string">"checked"</span> <span class="attr">value</span>=<span class="string">"male"</span>&gt;</span>男</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"sex"</span> <span class="attr">value</span>=<span class="string">"female"</span>&gt;</span>女<span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    用户爱好：</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"hobby"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">"checked"</span> <span class="attr">value</span>=<span class="string">"basketball"</span>&gt;</span>篮球</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"hobby"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"football"</span>&gt;</span>足球</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"hobby"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"pingpong"</span>&gt;</span>乒乓球<span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    用户国籍：<span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"country"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"none"</span>&gt;</span>---请输入国籍---<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"cn"</span> <span class="attr">selected</span>=<span class="string">"selected"</span>&gt;</span>中国<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"usa"</span>&gt;</span>美国<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"france"</span>&gt;</span>法国<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    用户描述：<span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"desc"</span>&gt;</span>defaultInfo<span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"reset"</span> <span class="attr">value</span>=<span class="string">"重置按钮"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交按钮"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">value</span>=<span class="string">"本地文件"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"hiddenInfo"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"hidden info"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -347,7 +364,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li></ul>
     </div>
   </div>
 
@@ -358,6 +375,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/06/13/html%E6%95%99%E7%A8%8B/">html教程</a>
+          </li>
         
           <li>
             <a href="/2020/05/16/spring%E6%95%99%E7%A8%8B/">spring教程</a>
@@ -373,10 +394,6 @@
         
           <li>
             <a href="/2020/05/04/jvm%E5%86%85%E5%AD%98/">jvm内存</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/29/react%E6%A1%86%E6%9E%B6/">react框架</a>
           </li>
         
       </ul>
