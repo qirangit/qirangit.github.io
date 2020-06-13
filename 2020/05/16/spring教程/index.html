@@ -28,8 +28,9 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/06/07/tgO0XQ.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/05/31/t3YjDH.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/05/31/t3Yvbd.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/06/13/tvd3wj.jpg">
 <meta property="article:published_time" content="2020-05-16T06:15:13.014Z">
-<meta property="article:modified_time" content="2020-06-07T15:25:47.597Z">
+<meta property="article:modified_time" content="2020-06-13T10:40:59.241Z">
 <meta property="article:author" content="Robot Qi">
 <meta property="article:tag" content="java&#x2F;go&#x2F;python">
 <meta name="twitter:card" content="summary">
@@ -433,13 +434,18 @@
 <li><p>提供@Import注解，实际开发中，会存在多个xml配置文件或者多个配置类，而且还存在xml与注解两种形式混用的情况，所以就存在整合配置的问题，整合的方式有多种</p>
 <ul>
 <li><p>多个配置文件或者配置类可以被spring容器启动时显式指定</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> ApplicationContext ac=<span class="keyword">new</span> AnnotationConfigApplicationContext(SpringConfiguration<span class="class">.<span class="keyword">class</span>,<span class="title">OuterConfiguration</span>.<span class="title">class</span>)</span>;</span><br><span class="line">ClassPathXmlApplicationContext ac2 = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"spring.xml"</span>,<span class="string">"outer.xml"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ac=<span class="keyword">new</span> AnnotationConfigApplicationContext(SpringConfiguration<span class="class">.<span class="keyword">class</span>,<span class="title">OuterConfiguration</span>.<span class="title">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>配置文件或配置类一般都存在父子关系，也就说在父配置中导入其他配置，这样容器在启动时，只需要加载主配置即可，对于配置类，使用<code>@Import</code>注解导入子配置类(也可以使用扫描的方式引入子配置类)，对于配置文件，使用<code>&lt;import&gt;</code>标签导入子配置xml文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 在SpringConfiguration配置类中导入OuterConfiguration配置类</span></span><br><span class="line"> <span class="meta">@ComponentScan</span>(<span class="string">"com.robotqi"</span>)</span><br><span class="line"> <span class="meta">@Import</span>(OuterConfiguration<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"> <span class="title">public</span> <span class="title">class</span> <span class="title">SpringConfiguration</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"> -----------------分割线------------------</span><br><span class="line"> <span class="comment">// 在spring.xml配置文件中导入outer.xml配置文件</span></span><br><span class="line">&lt;import resource="classpath:outer.xml"&gt;&lt;/import&gt;</span><br></pre></td></tr></table></figure>
-</li>
+</ul>
+<p>ClassPathXmlApplicationContext ac2 = new ClassPathXmlApplicationContext(“spring.xml”,”outer.xml”);</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">- 配置文件或配置类一般都存在父子关系，也就说在父配置中导入其他配置，这样容器在启动时，只需要加载主配置即可，对于配置类，使用&#96;@Import&#96;注解导入子配置类(也可以使用扫描的方式引入子配置类)，对于配置文件，使用&#96;&lt;import&gt;&#96;标签导入子配置xml文件</span><br><span class="line">   </span><br><span class="line">  &#96;&#96;&#96;java</span><br><span class="line">  &#x2F;&#x2F; 在SpringConfiguration配置类中导入OuterConfiguration配置类</span><br><span class="line">  @ComponentScan(&quot;com.robotqi&quot;)</span><br><span class="line">  @Import(OuterConfiguration.class)</span><br><span class="line">  public class SpringConfiguration &#123;</span><br><span class="line">   &#125;</span><br><span class="line">  -----------------分割线------------------</span><br><span class="line">  &#x2F;&#x2F; 在spring.xml配置文件中导入outer.xml配置文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">      </span><br><span class="line">&lt;import resource&#x3D;&quot;classpath:outer.xml&quot;&gt;&lt;&#x2F;import&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>对于配置类和xml配置文件同时存在的情况，如果配置类需要导入配置文件，只需要使用<code>@ImportResource</code>注解导入xml文件，如果配置文件需要导入配置类，只需要将其<code>&lt;component-scan&gt;</code>标签扫描到子配置类即可</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 在配置类中导入配置文件</span></span><br><span class="line"> <span class="meta">@Configuration</span></span><br><span class="line"> <span class="meta">@ComponentScan</span>(<span class="string">"com.robotqi"</span>)</span><br><span class="line"> <span class="meta">@ImportResource</span>(<span class="string">"classpath:outer.xml"</span>)</span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfiguration</span> </span>&#123;</span><br><span class="line"> &#125;</span><br><span class="line"> --------------------分割线----------------------</span><br><span class="line"> <span class="comment">// 在配置文件中通过扫描配置类实现导入</span></span><br><span class="line"> &lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line"> &lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">        xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">        xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">        xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">  http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">  http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">  http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span><br><span class="line">     &lt;context:component-scan base-package="com.robotqi"&gt;&lt;/context:component-scan&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在配置类中导入配置文件</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(<span class="string">"com.robotqi"</span>)</span><br><span class="line"><span class="meta">@ImportResource</span>(<span class="string">"classpath:outer.xml"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">--------------------分割线----------------------</span><br><span class="line"><span class="comment">// 在配置文件中通过扫描配置类实现导入</span></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string"> http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string"> http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string"> http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span><br><span class="line">    &lt;context:component-scan base-package="com.robotqi"&gt;&lt;/context:component-scan&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">      </span><br><span class="line">&lt;&#x2F;beans&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>现在一般使用注解的形式，所以建议使用一个父配置类，并导入子配置类以及其他子配置文件，然后通过父配置类来启动spring容器，注意配置类在被显式指定启动或者被@Import导入时，可以不添加@Configuraion注解，但是这里还是建议添加上，避免误判</p>
 </li>
@@ -753,18 +759,66 @@
 </li>
 <li><p>切面类LogAspect.class，需要编写advice和pointcut</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line">   <span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogAspect</span> </span>&#123;</span><br><span class="line">       <span class="meta">@Pointcut</span>(<span class="string">"execution(public * com.robotqi.Caculate.*(..))"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pointCut</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 本切面类里面可以直接使用该切入点表达式</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="meta">@Before</span>(<span class="string">"pointCut()"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeLog</span><span class="params">(JoinPoint jp)</span> </span>&#123;</span><br><span class="line">           <span class="comment">// 可以通过指定JointPoint变量，在方法里就能获取其方法名和参数值</span></span><br><span class="line">           Object[] args = jp.getArgs();</span><br><span class="line">           String methodName = jp.getSignature().getName();</span><br><span class="line">           System.out.println(Arrays.asList(args));</span><br><span class="line">           System.out.println(methodName);</span><br><span class="line">           System.out.println(<span class="string">"before"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 这里使用切入点表达式的全类名名称，其他切面类也可以使用</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="meta">@After</span>(<span class="string">"com.robotqi.util.LogAspect.pointCut()"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterLog</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           System.out.println(<span class="string">"after"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 如果需要其他参数，其中JoinPoint参数必须放置在第一位，这里的返回值需要指定配置，spring会根据配置反射封装一个</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="meta">@AfterReturning</span>(value = <span class="string">"pointCut()"</span>, returning = <span class="string">"value"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterReturningLog</span><span class="params">(JoinPoint jp, Object value)</span> </span>&#123;</span><br><span class="line">           System.out.println(<span class="string">"target:"</span> + jp.getTarget());</span><br><span class="line">           System.out.println(<span class="string">"return:"</span> + value);</span><br><span class="line">           System.out.println(<span class="string">"afterReturning"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 同理，对于异常如果想要获取，也需要通过指定throwing属性</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="meta">@AfterThrowing</span>(value = <span class="string">"pointCut()"</span>, throwing = <span class="string">"e"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterThrowingLog</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">           System.out.println(<span class="string">"afterThrowing"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 环绕增强，需要手动调用target方法</span></span><br><span class="line"><span class="comment">        * <span class="doctag">@param</span> pjp</span></span><br><span class="line"><span class="comment">        * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="meta">@Around</span>(<span class="string">"pointCut()"</span>)</span><br><span class="line">       <span class="function"><span class="keyword">public</span> Object <span class="title">aroundLog</span><span class="params">(ProceedingJoinPoint pjp)</span></span>&#123;</span><br><span class="line">           Object result=<span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">try</span>&#123;</span><br><span class="line">               System.out.println(<span class="string">"before"</span>);</span><br><span class="line">               result = pjp.proceed(pjp.getArgs());</span><br><span class="line">               System.out.println(<span class="string">"afterReturing"</span>);</span><br><span class="line">           &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">               System.out.println(<span class="string">"afterThrowing"</span>);</span><br><span class="line">           &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">               System.out.println(<span class="string">"after"</span>);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> result;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ol>
 </li>
-<li><p>AOP实现原理</p>
+</ol>
+</li>
+</ol>
 <ol>
-<li>@EnableAspectJAutoProxy注解，其拥有一个复合注解@Import(AspectJAutoProxyRegistrar.class)，其是ImportBeanDefinitionRegistrar，所以其用于注册自定义bean</li>
-<li>这个自定义的bean是AnnotationAwareAspectJAutoProxyCreator，其是一个InstantiationAwareBeanPostProcessor实例化感知后处理器，也就是说@EnableAspectJAutoProxy注解是给spring容器导入一个自动代理创建器的InstantiationAwareBeanPostProcessor后置处理器</li>
-<li>spring容器在启动过程中，通过registerBeanPostProcessors()方法将该后置处理器添加进InstantiationAwareBeanPostProcessor列表中，在每个bean定义实例化之前，AnnotationAwareAspectJAutoProxyCreator会调用postProcessBeforeInstantiation()方法根据配置判断是否要给bean创建一个代理对象</li>
+<li><h3 id="spring事务控制"><a href="#spring事务控制" class="headerlink" title="spring事务控制"></a>spring事务控制</h3></li>
+</ol>
+<ol>
+<li><p>spring提供了很方便的事务管理，可以在事务方法前通过事务管理器开启一个事务，在事务方法正常执行时事务管理器自动提交，在事务方法异常执行时捕捉异常时，事务管理器自动回滚</p>
+<ol>
+<li><p>首先导入依赖，导入spring-jdbc、数据源和驱动依赖</p>
+   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.12.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.6.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mchange<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>c3p0<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.49<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>开启事务管理需要三步骤，首先在事务方法上标注@Transactional注解，然后在配置类上标注@EnableTransactionManagement开启事务功能，最后需要配置一个事务管理器bean</p>
+<ul>
+<li>开启事务功能</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line">   <span class="meta">@ComponentScan</span>(basePackages = <span class="string">"com.robotqi"</span>)</span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">           AnnotationConfigApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(SpringConfiguration<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">       <span class="comment">// 配置数据源</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ComboPooledDataSource dataSource = <span class="keyword">new</span> ComboPooledDataSource();</span><br><span class="line">           dataSource.setUser(<span class="string">"root"</span>);</span><br><span class="line">        dataSource.setPassword(<span class="string">"123456"</span>);</span><br><span class="line">           dataSource.setJdbcUrl(<span class="string">"jdbc:mysql://localhost:3306/test"</span>);</span><br><span class="line">        dataSource.setDriverClass(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">           <span class="keyword">return</span> dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">       <span class="comment">// 配置事务管理器，这里选择使用数据源事务管理器</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">transactionManager</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource());</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>开启事务方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@Service</span></span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">       <span class="meta">@Autowired</span></span><br><span class="line">       <span class="keyword">private</span> UserDao userDao;</span><br><span class="line">       <span class="comment">// 标注为事务方法</span></span><br><span class="line">       <span class="meta">@Transactional</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>&#123;</span><br><span class="line">           userDao.update(<span class="number">1</span>);</span><br><span class="line">        userDao.update(<span class="number">2</span>);</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>事务管理源码</p>
+<ol>
+<li>使用@EnableTransactionManagement注解，其有一个复合的注解@Import(TransactionManagementConfigurationSelector.class)，用于导入组件，TransactionManagementConfigurationSelector实现ImportSelector接口，其会导入AutoProxyRegistrar和ProxyTransactionManagementConfiguration两种组件</li>
+</ol>
+</li>
+<li><p>AutoProxyRegistrar组件是一个ImportBeanDefinitionRegistrar，其注册了InfrastructureAdvisorAutoProxyCreator组件，该组件是InstantiationAwareBeanPostProcessor后置处理器，从而能够在bean初始化后进行处理返回代理对象</p>
+<ol start="3">
+<li><p>ProxyTransactionManagementConfiguration是一个事务管理器配置类组件，其通过若干个@Bean注解方法定义了bean，定义了名称为transactionAdvisor事务增强器bean，其需要事务属性源bean和事务拦截器bean</p>
+<ul>
+<li>名称为transactionAttributeSource的事务属性源bean，用于解析@Transactional注解的属性</li>
+<li>名称为transactionInterceptor事务拦截器的bean，其实现MethodInterceptor接口，用于拦截事务方法调用，invokeWithinTransaction()方法为核心执行部分</li>
+</ul>
+</li>
+<li><p>spring的事务管理本质上是通过AOP代理实现事务拦截器，从而进行拦截调用</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">invokeWithinTransaction</span><span class="params">(Method method, @Nullable Class&lt;?&gt; targetClass,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">final</span> InvocationCallback invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 获取事务管理器</span></span><br><span class="line">PlatformTransactionManager ptm = asPlatformTransactionManager(tm);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 开启事务</span></span><br><span class="line">TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification);</span><br><span class="line"></span><br><span class="line">			Object retVal;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">// 调用目标方法</span></span><br><span class="line">				retVal = invocation.proceedWithInvocation();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">				<span class="comment">// 发生异常时回滚</span></span><br><span class="line">				completeTransactionAfterThrowing(txInfo, ex);</span><br><span class="line">				<span class="keyword">throw</span> ex;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">finally</span> &#123;</span><br><span class="line">				cleanupTransactionInfo(txInfo);</span><br><span class="line">			&#125;</span><br><span class="line">    		<span class="comment">// ...</span></span><br><span class="line">			<span class="comment">// 正常执行完提交</span></span><br><span class="line">			commitTransactionAfterReturning(txInfo);</span><br><span class="line">			<span class="keyword">return</span> retVal;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
 </ol>
 </li>
 </ol>
-<h3 id="spring源码分析"><a href="#spring源码分析" class="headerlink" title="spring源码分析"></a>spring源码分析</h3><ol>
+</li>
+</ol>
+<h3 id="IOC源码分析"><a href="#IOC源码分析" class="headerlink" title="IOC源码分析"></a>IOC源码分析</h3><ol>
 <li><p>创建AnnotationConfigApplicationContext空参对象，创建spring容器</p>
 <ol>
 <li>AnnotatedBeanDefinitionReader()，创建reader</li>
@@ -775,27 +829,23 @@
 </li>
 <li><p>refresh()，刷新容器，这个方法是spring核心方法</p>
 <ol>
-<li><p>prepareRefresh()，刷新前的预处理，做一些属性设置</p>
-</li>
-<li><p>obtainFreshBeanFactory()，获取已经创建的beanFactory、</p>
-</li>
-<li><p>prepareBeanFactory()，对bean工厂做预处理</p>
-<ol>
+<li>prepareRefresh()，刷新前的预处理，做一些属性设置</li>
+<li>obtainFreshBeanFactory()，获取已经创建的beanFactory、</li>
+<li>prepareBeanFactory()，对bean工厂做预处理<ol>
 <li>设置BeanFactory的类加载器、支持表达式解析器</li>
 <li>给BeanFactory中注册一些组件，比如ConfigurableEnvironment等</li>
 </ol>
 </li>
-<li><p>postProcessBeanFactory()，hook方法，留给子类自定义逻辑</p>
+</ol>
 </li>
-<li><p>invokeBeanFactoryPostProcessors()，调用bean工厂的后处理器，在BeanFactory标准初始化之后执行，其有两个接口：BeanFactoryPostProcessor、BeanDefinitionRegistryPostProcessor，这里执行完后bean工厂就初始化完毕</p>
-<ol>
+<li><p>postProcessBeanFactory()，hook方法，留给子类自定义逻辑，在此之上的步骤就完成了bean注册表的生成，此时只有bean定义，没有bean实例</p>
+<ol start="5">
+<li>invokeBeanFactoryPostProcessors()，调用bean工厂的后处理器，在BeanFactory标准初始化之后执行，其有两个接口：BeanFactoryPostProcessor、BeanDefinitionRegistryPostProcessor，这里执行完后bean工厂就初始化完毕<ol>
 <li>先执行BeanDefinitionRegistryPostProcessor处理器，根据处理器是否实现PriorityOrdered或Ordered接口，分成三类进行排序依次调用postProcessBeanDefinitionRegistry()方法和postProcessBeanFactory()方法</li>
 <li>再排序执行BeanFactoryPostProcessor的postProcessBeanFactory()方法</li>
 </ol>
 </li>
-<li><p>registerBeanPostProcessors()，注册bean后置处理器，具体调用得在bean创建或初始化阶段执行，具体取决于后置处理器类型，其共有五个接口，</p>
-<pre><code>BeanPostProcessor、
-DestructionAwareBeanPostProcessor、
+<li>registerBeanPostProcessors()，注册bean后置处理器，具体调用得在bean创建或初始化阶段执行，具体取决于后置处理器类型，其共有五个接口，<br>   BeanPostProcessor、<pre><code>DestructionAwareBeanPostProcessor、
 InstantiationAwareBeanPostProcessor、
 SmartInstantiationAwareBeanPostProcessor、
 MergedBeanDefinitionPostProcessor</code></pre><ol>
@@ -804,13 +854,14 @@ MergedBeanDefinitionPostProcessor</code></pre><ol>
 <li>最后还默认提前注册一个ApplicationListenerDetector，其用来在Bean初始化完成后回调postProcessAfterInitialization()方法检查该bean是否是ApplicationListener，并添加到监听者列表中</li>
 </ol>
 </li>
-<li><p>initMessageSource()，初始化message source，用于处理国际化等</p>
-</li>
-<li><p>initApplicationEventMulticaster()，创建一个多播器</p>
+<li>initMessageSource()，初始化message source，用于处理国际化等</li>
+<li>initApplicationEventMulticaster()，创建一个多播器</li>
+</ol>
 </li>
 <li><p>onRefresh()，hook方法，用于子类刷新逻辑</p>
-</li>
-<li><p>registerListeners()，获取容器中所有实现ApplicationListener的bean定义，实例化并添加到多播器中</p>
+<ol start="10">
+<li>registerListeners()，获取容器中所有实现ApplicationListener的bean定义，实例化并添加到多播器中</li>
+</ol>
 </li>
 <li><p>finishBeanFactoryInitialization()，初始化剩余的单实例bean，前面的BeanFactoryPostProcessor和BeanPostProcessor等bean已经实例化过了，现在是实例化bean定义中剩下的bean，其中调用preInstantiateSingletons()方法</p>
 <ol>
@@ -830,10 +881,12 @@ MergedBeanDefinitionPostProcessor</code></pre><ol>
 </li>
 <li><p>doCreateBean()，创建bean，</p>
 <ol>
-<li>createBeanInstance()，通过反射创建bean实例</li>
+<li>createBeanInstance()，通过反射创建bean实例<ol start="2">
 <li>applyMergedBeanDefinitionPostProcessors()，在实例化后处理，调用MergedBeanDefinitionPostProcessor处理器postProcessMergedBeanDefinition()方法</li>
-<li>populateBean()，给bean实例属性赋值<ol>
-<li>调用InstantiationAwareBeanPostProcessor后置处理器的postProcessAfterInstantiation()</li>
+</ol>
+</li>
+<li>populateBean()，给bean实例属性赋值</li>
+<li>调用InstantiationAwareBeanPostProcessor后置处理器的postProcessAfterInstantiation()<ol start="2">
 <li>调用InstantiationAwareBeanPostProcessor后置处理器的<pre><code>postProcessPropertyValues()</code></pre></li>
 <li>applyPropertyValues()，通过反射使用setter为属性赋值</li>
 </ol>
@@ -846,9 +899,8 @@ MergedBeanDefinitionPostProcessor</code></pre><ol>
 </ol>
 </li>
 </ol>
-</li>
-<li><p>getSingleton()，其中调用addSingleton()方法，用于将单例bean添加进缓存</p>
-</li>
+<ol start="2">
+<li>getSingleton()，其中调用addSingleton()方法，用于将单例bean添加进缓存</li>
 </ol>
 </li>
 </ol>
@@ -864,6 +916,32 @@ MergedBeanDefinitionPostProcessor</code></pre><ol>
 <li><p>finishRefresh()，完成容器刷新，发布结束事件</p>
 </li>
 </ol>
+<h3 id="AOP源码"><a href="#AOP源码" class="headerlink" title="AOP源码"></a>AOP源码</h3></li>
+<li><p>spring容器启动时，在进行工厂初始化时，根据@EnableAspectJAutoProxy注解，其拥有一个复合注解@Import(AspectJAutoProxyRegistrar.class)，其是ImportBeanDefinitionRegistrar，可以用于注册名称为internalAutoProxyCreator的AnnotationAwareAspectJAutoProxyCreator自动代理创建器bean，这是一个InstantiationAwareBeanPostProcessor后置处理器</p>
+</li>
+<li><p>在registerBeanPostProcessors()阶段，会实例化该后置处理器并进行注册</p>
+</li>
+<li><p>在finishBeanFactoryInitialization()即实例化剩下的单例bean阶段，在每个bean初始化完之后会调用后置处理器的后处理，其中该后置处理器在postProcessAfterInitialization会调用wrapIfNecessary()，判断是否需要创建该bean实例的代理对象</p>
+<ol>
+<li><p>首先获取该bean所有的增强器(增强方法)，如果不存在则返回原有的bean</p>
+</li>
+<li><p>如果该bean存在增强器，那就通过ProxyFactory创建代理对象，根据规则选择使用JdkDynamicAopProxy或ObjenesisCglibAopProxy，默认是使用cglib，即通过Enhancer返回创建代理对象bean替代目标对象bean。根据下图可以看出，对于CGLIB$CALLBACK_0字段，其持有该bean所有方法的拦截器和目标对象targetSource</p>
+<p><img src="https://s1.ax1x.com/2020/06/13/tvd3wj.jpg" alt></p>
+</li>
+</ol>
+</li>
+<li><p>目标方法执行，此时会走入代理逻辑</p>
+<ol>
+<li><p>首先进入ObjenesisCglibAopProxy的父类CglibAopProxy的intercept()方法中</p>
+</li>
+<li><p>调用getInterceptorsAndDynamicInterceptionAdvice()方法，获取该bean的这个目标方法的拦截器链，其中会将增强方法封装成MethodInteceptor，并通过链表返回</p>
+</li>
+<li><p>如果拦截器链为空，此时通过反射直接调用目标方法</p>
+</li>
+<li><p>如果存在拦截器链，此时通过拦截器链等信息创建CglibMethodInvocation对象并对其进行proceed()调用，完成AOP调用，其中会通过一定机制保证拦截器链和目标方法的调用顺序</p>
+</li>
+<li><p>正常执行时效果：前置增强-》目标方法-》后置最终增强-》后置返回增强</p>
+<p>异常执行时效果：前置增强-》目标方法-》后置最终增强-》异常增强</p>
 </li>
 </ol>
 </li>
